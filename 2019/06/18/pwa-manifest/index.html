@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-TW,en,default">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="manifest參數設定整理">
+<meta name="keywords" content="PWA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PWA - Manifest">
+<meta property="og:url" content="https://lilybon.github.io/2019/06/18/pwa-manifest/index.html">
+<meta property="og:site_name" content="Lilybon&#39;s Blog">
+<meta property="og:description" content="manifest參數設定整理">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*YI4vBrGUFLZZkVvG29nW9w.png">
+<meta property="og:image" content="https://www.androidpolice.com/wp-content/uploads/2017/03/nexus2cee_Screen-Shot-2017-03-21-at-5.20.36-PM.png">
+<meta property="og:updated_time" content="2019-06-19T09:34:09.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PWA - Manifest">
+<meta name="twitter:description" content="manifest參數設定整理">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1600/1*YI4vBrGUFLZZkVvG29nW9w.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lilybon.github.io/2019/06/18/pwa-manifest/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PWA - Manifest | Lilybon's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lilybon's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>關於</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Sail&display=swap" rel="stylesheet">
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilybon.github.io/2019/06/18/pwa-manifest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lilybon">
+      <meta itemprop="description" content="寫廢文筆記自娛的可撥仔">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lilybon's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PWA - Manifest
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2019-06-18 15:24:28" itemprop="dateCreated datePublished" datetime="2019-06-18T15:24:28+08:00">2019-06-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新於</span>
+                
+                <time title="修改時間：2019-06-19 17:34:09" itemprop="dateModified" datetime="2019-06-19T17:34:09+08:00">2019-06-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端筆記/" itemprop="url" rel="index"><span itemprop="name">前端筆記</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">文章字數：</span>
+                
+                <span title="文章字數">2.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+                
+                <span title="所需閱讀時間">2 分鐘</span>
+              
+            </div>
+          
+
+          
+          
+          
+            <div class="post-description">manifest參數設定整理</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+
+<h2 id="什麼是Web-App-Manifest"><a href="#什麼是Web-App-Manifest" class="headerlink" title="什麼是Web App Manifest"></a>什麼是Web App Manifest</h2><p>Web App Manifest屬於PWA的技術系列的一部份，它是一個JSON格式的文件，其提供Web被安裝到行動裝置時，能帶給使用者像是App快速訪問跟更豐富的體驗。</p>
+<p>簡單來說，就是可以讓Web能如虎添翼有App的部分特性：主要提供Web於行動裝置被下載到桌布執行時能跑出舒服的Splash Screen、擁有自己的App的名稱和icon、Add to Home Screen的視窗有了icon等細節設定。</p>
+<p>但這還不是PWA的全部，其他像是離線使用、pre-cache和推播等功能則需要仰賴Service Worker的幫助。須要注意的是，PWA必須要在https下才能發揮功用，否則你辛辛苦苦設定的manifest.json和sw.js都不會作用。</p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>建議把新建的manifest.json放在專案根目錄方便一併管理，並將此連結貼在專案所有html的header中。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"manifest"</span> <span class="attr">href</span>=<span class="string">"/manifest.json"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"立立蹦 智障理財管家"</span>,</span><br><span class="line">    <span class="attr">"short_name"</span>: <span class="string">"理財管家"</span>,</span><br><span class="line">    <span class="attr">"start_url"</span>: <span class="string">"/index.html"</span>,</span><br><span class="line">    <span class="attr">"display"</span>: <span class="string">"standalone"</span>,</span><br><span class="line">    <span class="attr">"background_color"</span>: <span class="string">"#00AAB9"</span>,</span><br><span class="line">    <span class="attr">"theme_color"</span>: <span class="string">"#008989"</span>,</span><br><span class="line">    <span class="attr">"orientation"</span>: <span class="string">"portrait"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"幫助客戶統計分析標的買賣的行為模式並產出報表，提出理財方面能改善之建議。"</span>,</span><br><span class="line">    <span class="attr">"icons"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-192.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"192x192"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-512.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"512x512"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="變數說明"><a href="#變數說明" class="headerlink" title="變數說明"></a>變數說明</h2><img src="https://cdn-images-1.medium.com/max/1600/1*YI4vBrGUFLZZkVvG29nW9w.png" alt="Splash Screen" title="Splash Screen" width="500">
+
+<ol>
+<li><p><strong>name</strong> - Web App名稱，會出現在Splash Screen的icon下方。</p>
+</li>
+<li><p><strong>short_name</strong> - 使用者從瀏覽器下載來的Web App icon圖示下面所顯示的名稱。</p>
+</li>
+<li><p><strong>start_url</strong> - 指定使用者開啟Web App時請求的起始url，若提供相對路徑網址將依manifest.json的所在位置當作基準。所以前面才會建議將manifest.json放在根目錄不但方便管理也不會使設定跑掉。</p>
+</li>
+<li><p><strong>display</strong> - 定義開發者喜好的顯示模式，請參考以下表格和圖例進行設定。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fullscreen</td>
+<td align="left">Web app隱藏瀏覽器的所有UI工具並占滿整個行動裝置可顯示的區域開啟網站，如下面右邊之範例所示。</td>
+</tr>
+<tr>
+<td>standalone</td>
+<td align="left">Web app隱藏瀏覽器的標準UI工具開啟網站 e.g.搜尋欄，如下面中間之範例所示。</td>
+</tr>
+<tr>
+<td>minimal-ui</td>
+<td align="left">Web app提供使用者小型的UI工具控制導覽(上一頁、下一頁、重新整理)，僅行動裝置的Chrome支援。</td>
+</tr>
+<tr>
+<td>browser</td>
+<td align="left">Web app以標準的瀏覽器開啟網站，如下面左邊之範例所示。</td>
+</tr>
+</tbody></table>
+<p><img src="https://www.androidpolice.com/wp-content/uploads/2017/03/nexus2cee_Screen-Shot-2017-03-21-at-5.20.36-PM.png" alt="display範例" title="display範例"></p>
+</li>
+<li><p><strong>background_color</strong> - 瀏覽器開啟Web App的過程中，manifest.json已可使用但stylesheet卻還沒被載入時，瀏覽器會參考該值給予Web App背景色來改善使用者載入時之體驗，隨後stylesheet被載入且可以使用後，網頁將不再以此值為背景色。</p>
+</li>
+<li><p><strong>theme_color</strong> - 定義Web App的主題顏色，用Chrome的話就是搜尋欄會變色。</p>
+</li>
+<li><p><strong>orientation</strong> - 定義預設的顯示方向，其值可如下列所示<br><code>any</code><br><code>natural</code><br><code>landscape</code><br><code>landscape-primary</code><br><code>landscape-secondary</code><br><code>portrait</code><br><code>portrait-primary</code><br><code>portrait-secondary</code></p>
+</li>
+<li><p><strong>description</strong> - 用一句話來描述形容這個Web App的功用。</p>
+</li>
+<li><p><strong>icons</strong> - 指定Array提供Web App圖示的物件，可被行動裝置的作業系統用在很多地方。e.g.</p>
+<ul>
+<li>Add to Home Screen時出現的icon</li>
+<li>行動裝置桌面的icon</li>
+<li>載入Splash Screen時出現的icon</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sizes</td>
+<td align="left">尺吋字串，亦可以空白作間格。e.g. “72x72 96x96”</td>
+</tr>
+<tr>
+<td>src</td>
+<td align="left">圖檔路徑，若為相對路徑則參考manifest.json的位置為基準。</td>
+</tr>
+<tr>
+<td>type</td>
+<td align="left">圖片的媒體類型提示。目的是提供使用者代理快速忽略不支援媒體類型的圖片。</td>
+</tr>
+</tbody></table>
+<p>須要注意的是iOS不會看manifest.json的設定，要在head前面加上link設置額外的apple touch icon才能顯示出App icon。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-icon"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">size</span>=<span class="string">"192x192"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/icons-192.png"</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>iOS的Splash Screen也須要在head額外設計一個畫面並加在link才能出現，好處是可以隨意設計一個版面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-startup-image"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/splash-1536x2048.png"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">media</span>=<span class="string">"(device-width: 1536) and (device-height: 2048) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://developer.mozilla.org/zh-TW/docs/Web/Manifest" target="_blank" rel="noopener">MDN - Web App Manifest</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/web-app-manifest/" target="_blank" rel="noopener">Web Fundamentals - The Web App Manifest</a></li>
+<li><a href="https://www.youtube.com/watch?v=AlEdGOLhuM8" target="_blank" rel="noopener">The Net Ninja - PWA Tutorial for Beginners #3 - The Web App Manifest</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/PWA/" rel="tag"># PWA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/18/vue-filter/" rel="next" title="Vue.js - Filter 過濾器">
+                <i class="fa fa-chevron-left"></i> Vue.js - Filter 過濾器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/18/kingdom-hearts-3-review/" rel="prev" title="王國之心3回顧">
+                王國之心3回顧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lilybon">
+            
+              <p class="site-author-name" itemprop="name">Lilybon</p>
+              <div class="site-description motion-element" itemprop="description">寫廢文筆記自娛的可撥仔</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/lilybon" title="GitHub &rarr; https://github.com/lilybon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zebra10029@gmail.com" title="E-Mail &rarr; mailto:zebra10029@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/lil_li_ly" title="Twitter &rarr; https://twitter.com/lil_li_ly" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是Web-App-Manifest"><span class="nav-number">1.</span> <span class="nav-text">什麼是Web App Manifest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署"><span class="nav-number">2.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#範例"><span class="nav-number">3.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數說明"><span class="nav-number">4.</span> <span class="nav-text">變數說明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">5.</span> <span class="nav-text">參考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lilybon</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="總字數">18k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="所需總閱讀時間">16 分鐘</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
