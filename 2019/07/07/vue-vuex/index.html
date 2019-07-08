@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-TW,en,default">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="專為Vue.js開發的狀態管理模式">
+<meta name="keywords" content="Vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js - Vuex">
+<meta property="og:url" content="https://lilybon.github.io/2019/07/07/vue-vuex/index.html">
+<meta property="og:site_name" content="Lilybon&#39;s Blog">
+<meta property="og:description" content="專為Vue.js開發的狀態管理模式">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-07-08T06:16:08.229Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js - Vuex">
+<meta name="twitter:description" content="專為Vue.js開發的狀態管理模式">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lilybon.github.io/2019/07/07/vue-vuex/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vue.js - Vuex | Lilybon's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lilybon's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>關於</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Sail&display=swap" rel="stylesheet">
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilybon.github.io/2019/07/07/vue-vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lilybon">
+      <meta itemprop="description" content="寫廢文筆記自娛的可撥仔">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lilybon's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue.js - Vuex
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2019-07-07 22:04:05" itemprop="dateCreated datePublished" datetime="2019-07-07T22:04:05+08:00">2019-07-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新於</span>
+                
+                <time title="修改時間：2019-07-08 14:16:08" itemprop="dateModified" datetime="2019-07-08T14:16:08+08:00">2019-07-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端筆記/" itemprop="url" rel="index"><span itemprop="name">前端筆記</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">文章字數：</span>
+                
+                <span title="文章字數">6.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+                
+                <span title="所需閱讀時間">6 分鐘</span>
+              
+            </div>
+          
+
+          
+          
+          
+            <div class="post-description">專為Vue.js開發的狀態管理模式</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<p>當專案日漸龐大而資料邏輯變得非常複雜時，過去那些Vue組件間溝通的方式可能不足以滿足我們的需求。<br>所以Vue.js提供了一個應用程序開發的狀態管理模式，已集中式存儲管理所有組件的狀態。<br>它的一大賣點是可以針對狀態做快照並可以回朔操作，也可以透過Vue的devTool監測commit以確保狀態如我們預測的變化。</p>
+<h2 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h2><p>可以在專案中透過以下指令下載或在Vue-CLI的初始設定選擇使用Vuex。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本設定"><a href="#基本設定" class="headerlink" title="基本設定"></a>基本設定</h2><p>新建一個store模組，若用Vue-CLI且有設定使用Vuex則會幫你預設建好該檔案。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex) <span class="comment">// 調用Vuex</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        <span class="comment">// 統一管理的資料</span></span><br><span class="line">    &#125;,</span><br><span class="line">    getters: &#123;</span><br><span class="line">        <span class="comment">// state的派生狀態，在不變動state的前提下提供條件篩選後的資料</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        <span class="comment">// 處理同步的state改變(vuex規範)</span></span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line">        <span class="comment">// 處理非同步(vuex規範)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在Vue專案的入口文件引用store.js。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  store, <span class="comment">// 記得要在實體化時加入</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="功能介紹"><a href="#功能介紹" class="headerlink" title="功能介紹"></a>功能介紹</h2><p>以下將簡單講述Vuex的核心概念。</p>
+<h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>Vuex採單一狀態樹－用一個Object統一包含整個Web應用程式共用的狀態，以便作為「唯一數據源(SSOT)」而存在。<br>注意每個Vue的專案限制只能使用一個store去存儲資料狀態，讓我們在應用程式不同的狀況下都可以任意從這個倉庫調閱資料。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>因為在根實例註冊store，其底下之任意組件均能透過<code>this.$store</code>取得State的值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 某個組件的vue file</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        count() &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.count</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h3><p>我們常常會碰到一些要去篩選array或object資料的狀況，若它會很頻繁的被使用，<br>用mixins把篩選函式copy到各個組件會是個不聰明的方法。<br>Vuex提供了getter－可以視為store的計算屬性，只有當其對應到的state發生改變才會被重新計算。<br>getter裡的函式第一個參數為state，也可將其他getter設為第二個參數做更進一步的過濾。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        activities: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">title</span>: <span class="string">'彈bass'</span>, <span class="attr">likeFlag</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">title</span>: <span class="string">'跑步'</span>, <span class="attr">likeFlag</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">title</span>: <span class="string">'念日文'</span>, <span class="attr">likeFlag</span>: <span class="literal">true</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    getters: &#123;</span><br><span class="line">        likedActivities: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> state.activities.filter(<span class="function"><span class="params">activity</span> =&gt;</span> activity.likeFlag)</span><br><span class="line">        &#125;,</span><br><span class="line">        likedActivitiesCount: <span class="function">(<span class="params">state, getters</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> getters.likedActivities.length</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在組件中取得getter的值方法如下。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 某個組件的vue file</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        likedActivities() &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.$store.getters.likedActivities</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h3><p>依照Vuex官方守則的玩法，只能在提交mutation時更動state的資料，且此變動依規定必須是同步的操作。<br>每個mutation都會有一個string的事件類型(type)和一個回調函數(handler)，<br>回調函數的第一個參數為state，第二個參數為payload－它允許提交時能帶入額外的參數，通常會為了使程式更易讀而把payload包裝成有語意的object。<br>須要特別注意array和object的變動，我個人是偏好用ES6的展開運算子去處理。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span>,</span><br><span class="line">        activities: [],</span><br><span class="line">        userInfo: &#123;</span><br><span class="line">            name: <span class="string">'Lilybon'</span>,</span><br><span class="line">            id: <span class="string">'lilybon777'</span>,</span><br><span class="line">            title: <span class="string">'廢文可撥仔'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        increment(state) &#123;</span><br><span class="line">            state.count++</span><br><span class="line">        &#125;,</span><br><span class="line">        pushActivities(state, payload) &#123;</span><br><span class="line">            <span class="keyword">let</span> activities = payload.activities</span><br><span class="line">            state.activities = [...state.activities, activities]</span><br><span class="line">        &#125;,</span><br><span class="line">        updateUserTitle(state, payload) &#123;</span><br><span class="line">            <span class="keyword">let</span> title = payload.title</span><br><span class="line">            state.userInfo = &#123;...state.userInfo, title&#125;</span><br><span class="line">            <span class="comment">// Vue.set(userInfo, 'title', title)</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>由組件提交mutation用commit，每筆commit可以被Vue的devTool觀測到紀錄，<br>透過devTool可以檢閱每次commit後的state資料、改動時間，甚至可以回朔commit操作，讓debug變得稍微快樂了一些。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 某個組件的vue file</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        increment() &#123;</span><br><span class="line">            <span class="keyword">this</span>.$store.commit(<span class="string">'increment'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        updateUserTitle(title) &#123;</span><br><span class="line">            <span class="keyword">this</span>.$store.commit(<span class="string">'updateUserTitle'</span>, &#123; <span class="comment">// 自訂義語意的payload格式</span></span><br><span class="line">                title</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>action依照規定只能提交mutation而不能竄改資料，<br>也就是它不會直接進行state的改變操作，而只允許透過傳遞payload給mutation讓它來進行資料改動。<br>它主要的功能是在執行任意非同步的操作。<br>下面以一個setTimeout和axios request作範例。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        boredApiDomain: <span class="string">'https://www.boredapi.com'</span>,</span><br><span class="line">        count: <span class="number">0</span>,</span><br><span class="line">        activity: []</span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        increment(state) &#123;</span><br><span class="line">            state.count++</span><br><span class="line">        &#125;,</span><br><span class="line">        updateActivities(state, payload) &#123;</span><br><span class="line">            <span class="keyword">let</span> activity = payload.activity</span><br><span class="line">            state.activity = &#123;...activity&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line">        incrementAsync(&#123; commit &#125;) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                commit(<span class="string">'increment'</span>)</span><br><span class="line">            &#125;, <span class="number">1000</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        requestActivity(&#123; commit, state &#125;, payload) &#123; </span><br><span class="line">            <span class="comment">// 可將state當參數傳入但切記不能直接對state操作</span></span><br><span class="line">            <span class="comment">// 第二個參數為可帶入之自訂義荷載</span></span><br><span class="line">            <span class="keyword">if</span>(!state.activities.length)&#123;</span><br><span class="line">                <span class="keyword">let</span> method = payload.method</span><br><span class="line">                axios.get(<span class="string">`<span class="subst">$&#123; boredApiDomain &#125;</span><span class="subst">$&#123; method &#125;</span>`</span>).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> activity = res.data</span><br><span class="line">                    commit(<span class="string">'updateActivities'</span>, &#123;</span><br><span class="line">                        activity</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>由組件發起action用dispatch。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 某個組件的vue file</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        incrementAsync() &#123;</span><br><span class="line">            <span class="keyword">this</span>.$store.dispatch(<span class="string">'incrementAsync'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        requestActivity(method) &#123;</span><br><span class="line">            <span class="keyword">this</span>.$store.dispatch(<span class="string">'requestActivity'</span>, &#123; <span class="comment">// 自訂義語意的payload格式</span></span><br><span class="line">                method</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="在組件間分發"><a href="#在組件間分發" class="headerlink" title="在組件間分發"></a>在組件間分發</h2><p>載入輔助函數將組件的methods函式映射至store的mutation和dispatch，<br>將組件的computed屬性映射至store的state和getter，<br>避免每次開一個新組件要就要重復寫一次對應的串接方法而感到煩躁無比。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 某個組件的vue file</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState, mapGetters, mapMutations, mapActions &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    computed: &#123;</span><br><span class="line">        ...mapState([<span class="string">'count'</span>]), <span class="comment">//將"this.count()"映射為"this.$store.state.count"</span></span><br><span class="line">        ...mapGetters([ <span class="comment">// 也可以使用字串array映射多個對應屬性</span></span><br><span class="line">            <span class="string">'likedActivities'</span>, </span><br><span class="line">            <span class="string">'dislikeActivities'</span></span><br><span class="line">        ])</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        ...mapMutations(&#123; <span class="comment">// 將"this.add()"映射為"this.$store.commit.increment"</span></span><br><span class="line">            add: <span class="string">'increment'</span> </span><br><span class="line">        &#125;),</span><br><span class="line">        ...mapActions(&#123; <span class="comment">// 也可以使用多個自訂義的函數名稱對應實際存在的action</span></span><br><span class="line">           addAsync : <span class="string">'incrementAsync'</span>,</span><br><span class="line">           requestRNGAct : <span class="string">'requestActivity'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是Vuex的介紹，心動不如趕快行動，在專案還沒大爆炸前改用它來當你的統一資料管理站吧。</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://vuex.vuejs.org/zh/" target="_blank" rel="noopener">Vuex官網DOC</a></li>
+<li><a href="http://www.boredapi.com/" target="_blank" rel="noopener">The Bored API</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/20/javascript-event/" rel="next" title="Javascript - 事件傳遞原理與常見函式功用">
+                <i class="fa fa-chevron-left"></i> Javascript - 事件傳遞原理與常見函式功用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lilybon">
+            
+              <p class="site-author-name" itemprop="name">Lilybon</p>
+              <div class="site-description motion-element" itemprop="description">寫廢文筆記自娛的可撥仔</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/lilybon" title="GitHub &rarr; https://github.com/lilybon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zebra10029@gmail.com" title="E-Mail &rarr; mailto:zebra10029@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/lil_li_ly" title="Twitter &rarr; https://twitter.com/lil_li_ly" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下載"><span class="nav-number">1.</span> <span class="nav-text">下載</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本設定"><span class="nav-number">2.</span> <span class="nav-text">基本設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能介紹"><span class="nav-number">3.</span> <span class="nav-text">功能介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#State"><span class="nav-number">3.1.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getter"><span class="nav-number">3.2.</span> <span class="nav-text">Getter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutation"><span class="nav-number">3.3.</span> <span class="nav-text">Mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action"><span class="nav-number">3.4.</span> <span class="nav-text">Action</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在組件間分發"><span class="nav-number">4.</span> <span class="nav-text">在組件間分發</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">5.</span> <span class="nav-text">參考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lilybon</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="總字數">24k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="所需總閱讀時間">22 分鐘</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

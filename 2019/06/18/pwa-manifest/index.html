@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*YI4vBrGUFLZZkVvG29nW9w.png">
 <meta property="og:image" content="https://www.androidpolice.com/wp-content/uploads/2017/03/nexus2cee_Screen-Shot-2017-03-21-at-5.20.36-PM.png">
-<meta property="og:updated_time" content="2019-06-19T09:34:09.304Z">
+<meta property="og:updated_time" content="2019-07-07T14:54:44.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PWA - Manifest">
 <meta name="twitter:description" content="manifest參數設定整理">
@@ -404,7 +404,7 @@
                 
                   <span class="post-meta-item-text">更新於</span>
                 
-                <time title="修改時間：2019-06-19 17:34:09" itemprop="dateModified" datetime="2019-06-19T17:34:09+08:00">2019-06-19</time>
+                <time title="修改時間：2019-07-07 22:54:44" itemprop="dateModified" datetime="2019-07-07T22:54:44+08:00">2019-07-07</time>
               
             
           </span>
@@ -494,9 +494,9 @@
 <p>簡單來說，就是可以讓Web能如虎添翼有App的部分特性：主要提供Web於行動裝置被下載到桌布執行時能跑出舒服的Splash Screen、擁有自己的App的名稱和icon、Add to Home Screen的視窗有了icon等細節設定。</p>
 <p>但這還不是PWA的全部，其他像是離線使用、pre-cache和推播等功能則需要仰賴Service Worker的幫助。須要注意的是，PWA必須要在https下才能發揮功用，否則你辛辛苦苦設定的manifest.json和sw.js都不會作用。</p>
 <h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>建議把新建的manifest.json放在專案根目錄方便一併管理，並將此連結貼在專案所有html的header中。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"manifest"</span> <span class="attr">href</span>=<span class="string">"/manifest.json"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"manifest"</span> <span class="attr">href</span>=<span class="string">"/manifest.json"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"立立蹦 智障理財管家"</span>,</span><br><span class="line">    <span class="attr">"short_name"</span>: <span class="string">"理財管家"</span>,</span><br><span class="line">    <span class="attr">"start_url"</span>: <span class="string">"/index.html"</span>,</span><br><span class="line">    <span class="attr">"display"</span>: <span class="string">"standalone"</span>,</span><br><span class="line">    <span class="attr">"background_color"</span>: <span class="string">"#00AAB9"</span>,</span><br><span class="line">    <span class="attr">"theme_color"</span>: <span class="string">"#008989"</span>,</span><br><span class="line">    <span class="attr">"orientation"</span>: <span class="string">"portrait"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"幫助客戶統計分析標的買賣的行為模式並產出報表，提出理財方面能改善之建議。"</span>,</span><br><span class="line">    <span class="attr">"icons"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-192.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"192x192"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-512.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"512x512"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"立立蹦 智障理財管家"</span>,</span><br><span class="line">    <span class="attr">"short_name"</span>: <span class="string">"理財管家"</span>,</span><br><span class="line">    <span class="attr">"start_url"</span>: <span class="string">"/index.html"</span>,</span><br><span class="line">    <span class="attr">"display"</span>: <span class="string">"standalone"</span>,</span><br><span class="line">    <span class="attr">"background_color"</span>: <span class="string">"#00AAB9"</span>,</span><br><span class="line">    <span class="attr">"theme_color"</span>: <span class="string">"#008989"</span>,</span><br><span class="line">    <span class="attr">"orientation"</span>: <span class="string">"portrait"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"幫助客戶統計分析標的買賣的行為模式並產出報表，提出理財方面能改善之建議。"</span>,</span><br><span class="line">    <span class="attr">"icons"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-192.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"192x192"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"src"</span>: <span class="string">"/images/icons-512.png"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"image/png"</span>,</span><br><span class="line">            <span class="attr">"sizes"</span>: <span class="string">"512x512"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="變數說明"><a href="#變數說明" class="headerlink" title="變數說明"></a>變數說明</h2><img src="https://cdn-images-1.medium.com/max/1600/1*YI4vBrGUFLZZkVvG29nW9w.png" alt="Splash Screen" title="Splash Screen" width="500">
 
@@ -569,10 +569,10 @@
 </tr>
 </tbody></table>
 <p>須要注意的是iOS不會看manifest.json的設定，要在head前面加上link設置額外的apple touch icon才能顯示出App icon。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-icon"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">size</span>=<span class="string">"192x192"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/icons-192.png"</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-icon"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">size</span>=<span class="string">"192x192"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/icons-192.png"</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>iOS的Splash Screen也須要在head額外設計一個畫面並加在link才能出現，好處是可以隨意設計一個版面。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-startup-image"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/splash-1536x2048.png"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">media</span>=<span class="string">"(device-width: 1536) and (device-height: 2048) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">"apple-touch-startup-image"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">"/images/splash-1536x2048.png"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">media</span>=<span class="string">"(device-width: 1536) and (device-height: 2048) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -703,7 +703,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -861,7 +861,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="總字數">18k</span>
+    <span title="總字數">24k</span>
   
 
   
@@ -870,7 +870,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="所需總閱讀時間">16 分鐘</span>
+    <span title="所需總閱讀時間">22 分鐘</span>
   
 </div>
 
