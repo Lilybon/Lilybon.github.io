@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-TW,en,default">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="避免圖片因一次性全載入而發生大塞車卡頓的悲劇">
+<meta name="keywords" content="Javascript,效能調校">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端優化 - 圖片懶載入">
+<meta property="og:url" content="https://lilybon.github.io/2019/07/13/lazy-loading/index.html">
+<meta property="og:site_name" content="Lilybon&#39;s Blog">
+<meta property="og:description" content="避免圖片因一次性全載入而發生大塞車卡頓的悲劇">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://res.cloudinary.com/practicaldev/image/fetch/s--Cgg9Unxp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/gwvj2lrwfy97ljpj9lv3.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016110202.png">
+<meta property="og:updated_time" content="2019-07-14T08:55:05.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端優化 - 圖片懶載入">
+<meta name="twitter:description" content="避免圖片因一次性全載入而發生大塞車卡頓的悲劇">
+<meta name="twitter:image" content="https://res.cloudinary.com/practicaldev/image/fetch/s--Cgg9Unxp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/gwvj2lrwfy97ljpj9lv3.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lilybon.github.io/2019/07/13/lazy-loading/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>前端優化 - 圖片懶載入 | Lilybon's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lilybon's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>關於</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Sail&display=swap" rel="stylesheet">
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilybon.github.io/2019/07/13/lazy-loading/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lilybon">
+      <meta itemprop="description" content="寫廢文筆記自娛的可撥仔">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lilybon's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端優化 - 圖片懶載入
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2019-07-13 19:25:28" itemprop="dateCreated datePublished" datetime="2019-07-13T19:25:28+08:00">2019-07-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新於</span>
+                
+                <time title="修改時間：2019-07-14 16:55:05" itemprop="dateModified" datetime="2019-07-14T16:55:05+08:00">2019-07-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端筆記/" itemprop="url" rel="index"><span itemprop="name">前端筆記</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">文章字數：</span>
+                
+                <span title="文章字數">4.4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+                
+                <span title="所需閱讀時間">4 分鐘</span>
+              
+            </div>
+          
+
+          
+          
+          
+            <div class="post-description">避免圖片因一次性全載入而發生大塞車卡頓的悲劇</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+
+<h2 id="什麼情境下我們會須要圖片懶載入？"><a href="#什麼情境下我們會須要圖片懶載入？" class="headerlink" title="什麼情境下我們會須要圖片懶載入？"></a>什麼情境下我們會須要圖片懶載入？</h2><p>很多圖片的時候&lt;-偏幹話。通常在網頁呈現瀑布流－依賴持續捲動頁面加載資源的時候我們會用到懶載入，常見的google圖片搜尋、facebook、twitter都有採用這個簡易的優化技巧。</p>
+<p>它是一種設計模式，一方面因為大部分client也不一定會把整個網頁一路往下滑完才離開頁面，那我們貼心的幫他把可能非必要的資源都在一開始就加載是件浪費後端流量的無謂行為；另一方面如果不設置個條件延遲加載圖片等資源，如果資源過大或過多的情形，網頁會因為一次性加載圖片直接卡爆，這會嚴重影響使用者體驗。</p>
+<h2 id="實作方法"><a href="#實作方法" class="headerlink" title="實作方法"></a>實作方法</h2><p>讓我們透過範例了解怎麼實現這個技巧，接下來依下面的圖片元素結構來解決這個問題。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">class</span>=<span class="string">"lazy"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">src</span>=<span class="string">"placeholder-image.jpg"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">data-src</span>=<span class="string">"lazy-load-001-2x.jpg"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">data-srcset</span>=<span class="string">"lazy-load-001-2x.jpg 2x, lazy-load-001-1x.jpg 1x"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">alt</span>=<span class="string">"圖片失效了。"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>class - 自行定義想被歸類在要懶載入的標籤類別</li>
+<li>src - 原始低耗低解析度的過渡圖片路徑或乾脆整個拿掉</li>
+<li>data-src - 欲加入懶載入圖片路徑</li>
+<li>data-srcset - 依各pi所對應的欲加入懶載入圖片路徑</li>
+<li>alt - 圖片失效會出現的文字</li>
+</ul>
+<h3 id="Intersection-Observer-主流現代瀏覽器支持"><a href="#Intersection-Observer-主流現代瀏覽器支持" class="headerlink" title="Intersection Observer(主流現代瀏覽器支持)"></a>Intersection Observer(主流現代瀏覽器支持)</h3><p>Intersection observer API提供非同步監聽元素和其祖先或視窗交叉狀態的手段。<br><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--Cgg9Unxp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/gwvj2lrwfy97ljpj9lv3.png" alt="intersection observer" title="intersection observer交叉示意圖"><br>看看Web Fundamentals的範例是如何做的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> lazyImages = [].slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">'img.lazy'</span>))</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">"IntersectionObserver"</span> <span class="keyword">in</span> <span class="built_in">window</span>) &#123;</span><br><span class="line">        <span class="comment">// 構造參數</span></span><br><span class="line">        <span class="keyword">let</span> config = &#123;</span><br><span class="line">            root: <span class="literal">null</span>,</span><br><span class="line">            rootMargin: <span class="string">'50px 0px'</span>,</span><br><span class="line">            threshold: <span class="number">0.1</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 回呼函數</span></span><br><span class="line">        <span class="keyword">let</span> cb = <span class="function">(<span class="params">entries, observer</span>) =&gt;</span> &#123;</span><br><span class="line">            entries.forEach(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(entry.isIntersecting) &#123;</span><br><span class="line">                    <span class="keyword">let</span> lazyImage = entry.target</span><br><span class="line">                    lazyImage.src = lazyImage.dataset.src</span><br><span class="line">                    lazyImage.srcset = lazyImage.dataset.srcset</span><br><span class="line">                    lazyImage.classList.remove(<span class="string">"lazy"</span>)</span><br><span class="line">                    lazyImageObserver.unobserve(lazyImage) <span class="comment">// 停止觀察無須再觀察之元素</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> lazyImageObserver = <span class="keyword">new</span> IntersectionObserver(cb, config)</span><br><span class="line">        </span><br><span class="line">        lazyImages.forEach(<span class="function"><span class="params">lazyImage</span> =&gt;</span> &#123; <span class="comment">// 開始觀察各目標元素</span></span><br><span class="line">            lazyImageObserver.observe(lazyImage)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 不支援IntersectionObserver之其餘解法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="構造參數的屬性簡介"><a href="#構造參數的屬性簡介" class="headerlink" title="構造參數的屬性簡介"></a>構造參數的屬性簡介</h4><ul>
+<li>root - 根元素，若不給定值的話預設值為null－代表window可視區域的範圍，亦可以依特定需求設置成欲觀察的子元素們共同的祖先元素。</li>
+<li>rootMargin - 根元素的observer之延伸外邊距，設定方式跟CSS的外邊距一樣，我們通常會希望圖片在某個緩衝區就開始準備加載圖片而不是直到實際進入viewport才開始執行任務，那樣太慢了且會使client體驗很差。透過設定root的下邊距能使被觀測元素及早開始交叉達到執行callback的條件。</li>
+<li>threshold - 被觀測元素跟觀測元素相交(疊合)時，當intersectionRatio(兩者相交面積/被觀測元素總面積)超過threshold設定的百分比時，會觸發callback函數。<br>  <img src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016110202.png" alt="interSectionRatio示意圖" title="intersectionRatio示意圖"></li>
+</ul>
+<p>當我們不再需要observer時(e.g.確定沒有任何需要觀察之元素時)可以移除整個事件監聽器。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">imgObserver.disconnect() <span class="comment">// 移除observer之事件監聽器</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h4><p>優點</p>
+<ol>
+<li>語法簡潔不複雜，開發者只需要專注在設定根元素和子元素為何、何種情況算是交叉或被觀測到、callback做什麼DOM操作即可。</li>
+<li>相較於resize、scroll等發生事件執行回呼頻率低，對效能改善較好。</li>
+</ol>
+<p>缺點</p>
+<ol>
+<li>無法完全兼容各瀏覽器 - 參考Can I use，雖然大部分現代瀏覽器如Chrome、Firefox、Safari均支援，仍有少數瀏覽器無法支援該API。</li>
+</ol>
+<h3 id="事件驅動-考慮兼容性的作法"><a href="#事件驅動-考慮兼容性的作法" class="headerlink" title="事件驅動(考慮兼容性的作法)"></a>事件驅動(考慮兼容性的作法)</h3><p>基於前面所說的仍有少數瀏覽器不支援Intersection Observer，<br>另一種比較傳統的做法就是以resize、scroll、orientationChange事件觸發來檢測DOM元素是否進入視圖來進行懶載入。<br>看看Web Fundamentals的範例是如何做的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"DOMContentLoaded"</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> lazyImages = [].slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">"img.lazy"</span>))</span><br><span class="line">  <span class="keyword">let</span> active = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> lazyLoad = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (active === <span class="literal">false</span>) &#123;</span><br><span class="line">      active = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        lazyImages.forEach(<span class="function">(<span class="params">lazyImage</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> ((lazyImage.getBoundingClientRect().top &lt;= <span class="built_in">window</span>.innerHeight &amp;&amp; lazyImage.getBoundingClientRect().bottom &gt;= <span class="number">0</span>) &amp;&amp; </span><br><span class="line">          getComputedStyle(lazyImage).display !== <span class="string">"none"</span>) &#123;</span><br><span class="line">            lazyImage.src = lazyImage.dataset.src</span><br><span class="line">            lazyImage.srcset = lazyImage.dataset.srcset</span><br><span class="line">            lazyImage.classList.remove(<span class="string">"lazy"</span>)</span><br><span class="line"></span><br><span class="line">            lazyImages = lazyImages.filter(<span class="function"><span class="params">image</span> =&gt;</span>image !== lazyImage)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (lazyImages.length === <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="built_in">document</span>.removeEventListener(<span class="string">"scroll"</span>, lazyLoad)</span><br><span class="line">              <span class="built_in">window</span>.removeEventListener(<span class="string">"resize"</span>, lazyLoad)</span><br><span class="line">              <span class="built_in">window</span>.removeEventListener(<span class="string">"orientationchange"</span>, lazyLoad)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        active = <span class="literal">false</span></span><br><span class="line">      &#125;, <span class="number">200</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.addEventListener(<span class="string">"scroll"</span>, lazyLoad)</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"resize"</span>, lazyLoad)</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"orientationchange"</span>, lazyLoad)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="優缺點-1"><a href="#優缺點-1" class="headerlink" title="優缺點"></a>優缺點</h4><p>優點</p>
+<ol>
+<li>相較前面的Intersection Observer，更廣泛兼容於絕大多數的瀏覽器。</li>
+</ol>
+<p>缺點</p>
+<ol>
+<li>效能差，事件驅動執行callBack的次數遠多於Intersection Observer。</li>
+</ol>
+<h3 id="套件"><a href="#套件" class="headerlink" title="套件"></a>套件</h3><p>了解怎麼用基本的JS完成實作後，要是覺得自己閉門造車很麻煩或很難維護，<br>可以參考開源的程式碼如何實作並自行衡量是否要採用。</p>
+<ul>
+<li><a href="https://github.com/hilongjw/vue-lazyload" target="_blank" rel="noopener">vue-lazyload</a></li>
+<li><a href="https://github.com/verlok/lazyload" target="_blank" rel="noopener">lazyload</a></li>
+</ul>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>先判斷瀏覽器是否支援Intersection Observer，支援就優先使用，不支援才用事件驅動解決。<br>當然最好是需求方開的全都是支援的瀏覽器啦，省下功夫做別的事。</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://love2dev.com/blog/google-lazy-load-seo/" target="_blank" rel="noopener">5 Techniques to Lazy-Load Website Content for Better SEO &amp; User Experience</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/" target="_blank" rel="noopener">Web Fundamentals - Lazy Loading Images and Video</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver" target="_blank" rel="noopener">MDN - Intersection Observer</a></li>
+<li><a href="https://juejin.im/post/5a7973575188257a5911a749" target="_blank" rel="noopener">掘金 - 谈谈IntersectionObserver懒加载</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html" target="_blank" rel="noopener">IntersectionObserver API 使用教程</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+            <a href="/tags/效能調校/" rel="tag"># 效能調校</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/07/vue-vuex/" rel="next" title="Vue.js - Vuex">
+                <i class="fa fa-chevron-left"></i> Vue.js - Vuex
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lilybon">
+            
+              <p class="site-author-name" itemprop="name">Lilybon</p>
+              <div class="site-description motion-element" itemprop="description">寫廢文筆記自娛的可撥仔</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/lilybon" title="GitHub &rarr; https://github.com/lilybon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zebra10029@gmail.com" title="E-Mail &rarr; mailto:zebra10029@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/lil_li_ly" title="Twitter &rarr; https://twitter.com/lil_li_ly" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼情境下我們會須要圖片懶載入？"><span class="nav-number">1.</span> <span class="nav-text">什麼情境下我們會須要圖片懶載入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作方法"><span class="nav-number">2.</span> <span class="nav-text">實作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intersection-Observer-主流現代瀏覽器支持"><span class="nav-number">2.1.</span> <span class="nav-text">Intersection Observer(主流現代瀏覽器支持)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#構造參數的屬性簡介"><span class="nav-number">2.1.1.</span> <span class="nav-text">構造參數的屬性簡介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#優缺點"><span class="nav-number">2.1.2.</span> <span class="nav-text">優缺點</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件驅動-考慮兼容性的作法"><span class="nav-number">2.2.</span> <span class="nav-text">事件驅動(考慮兼容性的作法)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#優缺點-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">優缺點</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套件"><span class="nav-number">2.3.</span> <span class="nav-text">套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#結論"><span class="nav-number">2.4.</span> <span class="nav-text">結論</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">3.</span> <span class="nav-text">參考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lilybon</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="總字數">29k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="所需總閱讀時間">26 分鐘</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
