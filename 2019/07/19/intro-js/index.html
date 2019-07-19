@@ -96,18 +96,20 @@
 
 
 
-  <meta name="description" content="Filter用來處理呈現於前端之格式化字串">
-<meta name="keywords" content="Vue.js">
+  <meta name="description" content="當你的前端頁面有那麼一米米複雜的時候可以採用的輔助工具">
+<meta name="keywords" content="Javascript,Intro.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue.js - Filter 過濾器">
-<meta property="og:url" content="https://lilybon.github.io/2019/06/18/vue-filter/index.html">
+<meta property="og:title" content="Intro.js - 網頁導覽">
+<meta property="og:url" content="https://lilybon.github.io/2019/07/19/intro-js/index.html">
 <meta property="og:site_name" content="Lilybon&#39;s Blog">
-<meta property="og:description" content="Filter用來處理呈現於前端之格式化字串">
+<meta property="og:description" content="當你的前端頁面有那麼一米米複雜的時候可以採用的輔助工具">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-07-07T14:52:35.400Z">
+<meta property="og:image" content="https://www.jqueryscript.net/images/Simple-Step-By-Step-Site-Tour-Plugin-Intro-js.jpg">
+<meta property="og:updated_time" content="2019-07-19T06:43:15.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vue.js - Filter 過濾器">
-<meta name="twitter:description" content="Filter用來處理呈現於前端之格式化字串">
+<meta name="twitter:title" content="Intro.js - 網頁導覽">
+<meta name="twitter:description" content="當你的前端頁面有那麼一米米複雜的時候可以採用的輔助工具">
+<meta name="twitter:image" content="https://www.jqueryscript.net/images/Simple-Step-By-Step-Site-Tour-Plugin-Intro-js.jpg">
 
 
 
@@ -115,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="https://lilybon.github.io/2019/06/18/vue-filter/">
+  <link rel="canonical" href="https://lilybon.github.io/2019/07/19/intro-js/">
 
 
 
@@ -125,7 +127,7 @@
   };
 </script>
 
-  <title>Vue.js - Filter 過濾器 | Lilybon's Blog</title>
+  <title>Intro.js - 網頁導覽 | Lilybon's Blog</title>
   
 
 
@@ -341,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lilybon.github.io/2019/06/18/vue-filter/">
+    <link itemprop="mainEntityOfPage" href="https://lilybon.github.io/2019/07/19/intro-js/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lilybon">
@@ -358,7 +360,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue.js - Filter 過濾器
+          <h1 class="post-title" itemprop="name headline">Intro.js - 網頁導覽
 
               
             
@@ -384,24 +386,12 @@
                 
               
 
-              <time title="創建時間：2019-06-18 15:05:11" itemprop="dateCreated datePublished" datetime="2019-06-18T15:05:11+08:00">2019-06-18</time>
+              <time title="創建時間：2019-07-19 13:12:55 / 修改時間：14:43:15" itemprop="dateCreated datePublished" datetime="2019-07-19T13:12:55+08:00">2019-07-19</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新於</span>
-                
-                <time title="修改時間：2019-07-07 22:52:35" itemprop="dateModified" datetime="2019-07-07T22:52:35+08:00">2019-07-07</time>
               
             
           </span>
@@ -447,7 +437,7 @@
                 
                   <span class="post-meta-item-text">文章字數：</span>
                 
-                <span title="文章字數">1.9k</span>
+                <span title="文章字數">2.6k</span>
               
 
               
@@ -469,7 +459,7 @@
           
           
           
-            <div class="post-description">Filter用來處理呈現於前端之格式化字串</div>
+            <div class="post-description">當你的前端頁面有那麼一米米複雜的時候可以採用的輔助工具</div>
           
 
         </div>
@@ -486,38 +476,52 @@
 
       
         <a id="more"></a>
-
-<h2 id="如何使用Filter"><a href="#如何使用Filter" class="headerlink" title="如何使用Filter"></a>如何使用Filter</h2><p>可以在v-bind表達式跟雙括號插值中使用。<br>(因為blog不支援雙括號故改由${}代替)</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"commodity-card"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"commodity-card__id"</span> <span class="attr">:id</span>=<span class="string">"rawId | formatId"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"commodity-card__price"</span>&gt;</span>$&#123; rawPrice | formatTriangle &#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="如何註冊Filter"><a href="#如何註冊Filter" class="headerlink" title="如何註冊Filter"></a>如何註冊Filter</h2><p>以下兩種方法提供Vue.js的使用者自行設定Filter的函式，我以vue-cli的架構做簡單的範例。</p>
-<h3 id="全域註冊Filter"><a href="#全域註冊Filter" class="headerlink" title="全域註冊Filter"></a>全域註冊Filter</h3><p>在Vue實例化之前註冊自訂義的filter，但要小心不要跟組件局部註冊之filter同名。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">Vue.filter(<span class="string">'formatTriangle'</span>, (val) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(val &gt; <span class="number">0</span>) val = <span class="string">'▲'</span> + val;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(val &lt; <span class="number">0</span>) val = <span class="string">'▼'</span> + val;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="局部註冊Filter"><a href="#局部註冊Filter" class="headerlink" title="局部註冊Filter"></a>局部註冊Filter</h3><p>在component內部的filters區塊加入函式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>() &#123;</span><br><span class="line">    delimiters: [<span class="string">'$&#123;'</span>, <span class="string">'&#125;'</span>],</span><br><span class="line">    data() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">          rawPrice: <span class="number">2568000</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    filters: &#123;</span><br><span class="line">        formatTriangle: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(val &gt; <span class="number">0</span>) val = <span class="string">'▲'</span> + val;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(val &lt; <span class="number">0</span>) val = <span class="string">'▼'</span> + val;</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Filter串聯"><a href="#Filter串聯" class="headerlink" title="Filter串聯"></a>Filter串聯</h2><p>filter亦具有先後順序性可被串聯，前一個結果的回傳值將被代到下一個filter作處理。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123; message | filterA | filterB &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Filter代參數"><a href="#Filter代參數" class="headerlink" title="Filter代參數"></a>Filter代參數</h2><p>filter可以代參數，可在filter函式第一個參數後自訂義多個參數。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"customer-service"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"customer-service__message"</span>&gt;</span>$&#123; message | customMessage(clientName, agentName) &#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Vue.filter(<span class="string">'customMessage'</span>, (val, client, agent) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`Dear <span class="subst">$&#123; client &#125;</span>, <span class="subst">$&#123; val &#125;</span> Sincerely, <span class="subst">$&#123; agent &#125;</span>`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Method、Computed、Filter之間的差異"><a href="#Method、Computed、Filter之間的差異" class="headerlink" title="Method、Computed、Filter之間的差異"></a>Method、Computed、Filter之間的差異</h2><ul>
-<li><p>method主要用來觸發狀態的改變，意味著可能會進階影響computed或filter，且data只要一變動都會導致瀏覽器上有用到method渲染的部分重繪，在渲染上的效能computed會相較method好。</p>
+<p>想像我們今天可能做了一個html遊戲，介面過於精簡只有圖像而無詳細說明，或者是開發一個線上金融商品交易的平台卻沒有UI的指示下單的詳細過程，導致使用者不知道如何適從。碰到這種情況，第一個直覺是使用彈出式視窗直接丟一坨拉庫的資訊塞爆client或是把使用說明藏在一個按鈕可以隨時開啟查閱。但是，你可以用更好的選擇來導引使用者逐步操作的方式，Intro.js正是為了這種情況而存在的好用工具。<br><img src="https://www.jqueryscript.net/images/Simple-Step-By-Step-Site-Tour-Plugin-Intro-js.jpg" alt="Intro.js" title="Intro.js"></p>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><p>拿我自己最近用Vue做的小專案Bored.prj的程式碼來做說明。(為了簡化教學會做一些微調)</p>
+<ol>
+<li><p>透過CDN或NPM等套件管理工具下載</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install intro.js --save</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>computed在data變動時只會在涉及跟自己有關的變數改變時才會發生重繪，較適合複雜的資料處理和轉換e.g.渲染動態時間條。</p>
+<li><p>給你想標示的html加入官方設定的data tag，定義如下：</p>
 </li>
-<li><p>若有很多組件都會用到需要處理字串格式化的部分，filter會比computed來得方便(但也可以考慮業務邏輯的複雜度用mixin來複製computed)，兩者均不應觸發狀態的改變，而是專心在變數的輸入輸出上，普遍上來說filter處理的邏輯相對比起computed簡單許多。</p>
+</ol>
+<ul>
+<li>data-step表示你希望出現指示的順序</li>
+<li>data-info表示你希望出現指示對應的內容<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--Playground.vue--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"playground"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TestCard</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">data-step</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-intro</span>=<span class="string">"活動卡片 價格跟難易度為抽象單位(0-1)"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TestChoiceButton</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">data-step</span>=<span class="string">"2"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-intro</span>=<span class="string">"用滑鼠拖曳活動卡片至此或直接按按鈕選擇表示討厭活動"</span> </span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TestChoiceButton</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">data-step</span>=<span class="string">"3"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-intro</span>=<span class="string">"用剛剛說明過的方法選擇表示喜歡活動"</span> </span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TestInfoBoard</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">data-step</span>=<span class="string">"4"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-intro</span>=<span class="string">"記分板提供你測驗的進度"</span> </span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<ol start="3">
+<li>使用Intro.js，注意配合不同框架的生命週期設置開始。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Playground.vue</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> introJs <span class="keyword">from</span> <span class="string">"intro.js"</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">"intro.js/minified/introjs.min.css"</span> <span class="comment">// 沒引入基本樣式的話會沒辦法顯示</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    mounted() &#123; <span class="comment">// 至少要在element渲染完成才能開始</span></span><br><span class="line">        introJs().start()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="主題設定"><a href="#主題設定" class="headerlink" title="主題設定"></a>主題設定</h2><p>如果你覺得預設的樣式醜得神奇，可以參考官方文件theme預覽圖和intro.js套件包裡面的themes資料夾中的css做主題設定，剩下的樣式部分再自己微調。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"intro.js/themes/introjs-modern.css"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其他設定"><a href="#其他設定" class="headerlink" title="其他設定"></a>其他設定</h2><p>在開始進行網頁導覽前是可以客製化設定參數的，變數定義可參考官方文件。</p>
+<p>設定單一參數(key, value)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">introJs()</span><br><span class="line">    .setOption(<span class="string">"overlayOpacity"</span>, <span class="number">0.35</span>)</span><br><span class="line">    .start()</span><br></pre></td></tr></table></figure>
+
+<p>設定多個參數(object)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">introJs()</span><br><span class="line">    .setOptions(&#123;</span><br><span class="line">        <span class="string">"overlayOpacity"</span>: <span class="number">0.35</span>, <span class="comment">// popup透明度</span></span><br><span class="line">        <span class="string">"skipLabel"</span>: <span class="string">"跳過"</span>,</span><br><span class="line">        <span class="string">"nextLabel"</span>: <span class="string">"下一步"</span>,</span><br><span class="line">        <span class="string">"prevLabel"</span>: <span class="string">"上一步"</span>,</span><br><span class="line">        <span class="string">"doneLabel"</span>: <span class="string">"我明白了"</span>,</span><br><span class="line">        <span class="string">"hidePrev"</span>: <span class="literal">true</span>, <span class="comment">// 若在第一步，會隱藏上一步按鈕</span></span><br><span class="line">        <span class="string">"hideNext"</span>: <span class="literal">true</span> <span class="comment">// 若在最後一步，會隱藏下一步按鈕</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .start()</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h2><ol>
+<li><p>如果專案是用框架寫的SPA架構且有設route，最好是把introJs綁上某個會隨route出現消失的最外層element上，否則按上一頁可能會導致introJs的popup沒消失的尷尬情況，筆者自己在玩專案的時候就遇過。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">introJs(<span class="string">"#playground"</span>) <span class="comment">// 選擇語法同querySelector</span></span><br><span class="line">    .start()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用vuetify開發組件時有些template的外層會被包一個更大的element而導致指示欄定位錯誤，可使用prop傳至正確element。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--Playground.vue--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">TestChoiceButton</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">:step</span>=<span class="string">"2"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:intro</span>=<span class="string">"用滑鼠拖曳活動卡片至此或直接按按鈕選擇表示討厭活動"</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--TestChoiceButton.vue--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"test-choice-button__wrong-place"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"test-choice-button__right-place"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">:data-step</span>=<span class="string">"step"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">:data-intro</span>=<span class="string">"intro"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自己也有遇到因為絕對定位的element被popup整個蓋過無法正常顯示。可以考慮把無法顯示之element的z-index設的高超過popup的就可以順利顯示了。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.introjs-overlay</span> &#123;</span><br><span class="line">    <span class="comment">/* 官方Intro.js的全屏遮蔽style */</span></span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">999999</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.an-absolute-element-to-show</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">10000000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>希望沒遇過坑的人可以少踩到幾步，以上是用Intro.js做網站導覽的基本介紹，有興趣的人可以翻閱官方文件嘗試更進階的操作。</p>
 <h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
-<li><a href="https://vuejs.org/v2/guide/filters.html" target="_blank" rel="noopener">Vue.js官網DOC</a></li>
-<li><a href="https://stackoverflow.com/questions/47940007/what-is-the-difference-between-filters-and-methods-in-vue-js" target="_blank" rel="noopener">stackoverflow - What is the difference between filters and methods in vue.js?</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10191948" target="_blank" rel="noopener">用範例理解 Vue.js #7：Filters vs Computed</a></li>
+<li><a href="https://introjs.com/" target="_blank" rel="noopener">Intro.js</a></li>
+<li><a href="https://github.com/Lilybon/Bored.prj" target="_blank" rel="noopener">Bored.prj</a></li>
 </ul>
 
       
@@ -545,7 +549,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+            <a href="/tags/Intro-js/" rel="tag"># Intro.js</a>
           
         </div>
       
@@ -558,8 +564,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/18/vue-components-communication/" rel="next" title="Vue.js - 組件間溝通">
-                <i class="fa fa-chevron-left"></i> Vue.js - 組件間溝通
+              <a href="/2019/07/13/lazy-loading/" rel="next" title="前端優化 - 圖片懶載入">
+                <i class="fa fa-chevron-left"></i> 前端優化 - 圖片懶載入
               </a>
             
           </div>
@@ -567,10 +573,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/18/pwa-manifest/" rel="prev" title="PWA - Manifest">
-                PWA - Manifest <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -770,7 +772,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用Filter"><span class="nav-number">1.</span> <span class="nav-text">如何使用Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何註冊Filter"><span class="nav-number">2.</span> <span class="nav-text">如何註冊Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全域註冊Filter"><span class="nav-number">2.1.</span> <span class="nav-text">全域註冊Filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部註冊Filter"><span class="nav-number">2.2.</span> <span class="nav-text">局部註冊Filter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter串聯"><span class="nav-number">3.</span> <span class="nav-text">Filter串聯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter代參數"><span class="nav-number">4.</span> <span class="nav-text">Filter代參數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method、Computed、Filter之間的差異"><span class="nav-number">5.</span> <span class="nav-text">Method、Computed、Filter之間的差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">6.</span> <span class="nav-text">參考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速上手"><span class="nav-number">1.</span> <span class="nav-text">快速上手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主題設定"><span class="nav-number">2.</span> <span class="nav-text">主題設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他設定"><span class="nav-number">3.</span> <span class="nav-text">其他設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事項"><span class="nav-number">4.</span> <span class="nav-text">注意事項</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">5.</span> <span class="nav-text">參考</span></a></li></ol></div>
             
 
           </div>
